@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tetris</string>
+    <string name="title_activity_main">Tetris</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+</resources>
