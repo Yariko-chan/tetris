@@ -183,8 +183,31 @@ public class TetrisView extends SurfaceView implements SurfaceHolder.Callback{
 
 
         public void moveFigure(boolean left) {
-            if (left) beginY -=1;
-            else beginY +=1;
+            Log.d(TAG, "left = " + left);
+            if (isCanMove(left)){
+                if (left) beginY -=1;
+                else beginY +=1;
+            }
+        }
+
+        //too complicated? must be easier
+        public boolean isCanMove(boolean left){
+            int[] x = mFigure.getX(beginX);
+            int[] y = mFigure.getY(beginY);
+            if (left) {
+                for (int i = 0; i<y.length; i++){
+                    if (y[i]-1 < 0 || (mField[x[i]][y[i]-1] == true)) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int i = 0; i<y.length; i++){
+                    if ( y[i]+1 >= mField[0].length|| (mField[x[i]][y[i]+1] == true)) {
+                        return false;
+                    }
+                }
+            }
+            return true;
         }
 
         public void rotateFigure() throws Exception {
@@ -397,9 +420,9 @@ public class TetrisView extends SurfaceView implements SurfaceHolder.Callback{
     private boolean isCanFall(Figure figure, int beginX, int beginY) {
         int[] x = figure.getX(beginX);
         int[] y = figure.getY(beginY);
-//        boolean isFree = true;
         for (int i = 0; i<x.length; i++){
-            if ((mField.length <= x[i]+1) || (mField[x[i]+1][y[i]] == true)) return false;
+            if ((x[i]+1 >= mField.length) || (mField[x[i]+1][y[i]] == true))
+                return false;
         }
         return true;
     }
